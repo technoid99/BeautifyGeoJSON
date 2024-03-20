@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Beautifier</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Beautify JSON</h1>
+    <input type="file" id="fileInput" accept=".json" />
+    <button onclick="beautifyJSON()">Beautify</button>
+    <pre id="jsonOutput"></pre>
+
+    <script>
+        function beautifyJSON() {
+            const fileInput = document.getElementById('fileInput');
+            const jsonOutput = document.getElementById('jsonOutput');
+            const file = fileInput.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.readAsText(file, 'UTF-8');
+                reader.onload = function (evt) {
+                    const json = JSON.parse(evt.target.result);
+                    const beautifiedJSON = JSON.stringify(json, null, 4);
+                    jsonOutput.textContent = beautifiedJSON;
+                }
+                reader.onerror = function (evt) {
+                    alert("Error reading file");
+                }
+            } else {
+                alert("Please select a file");
+            }
+        }
+    </script>
+</body>
+</html>
